@@ -6,14 +6,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CrearTarjetaResponse {
+public class EnrolarResponse {
 
   private String codigoRespuesta;
 
   private String mensaje;
 
-  private String numeroValidacion;
-
   private String pan;
-
 }

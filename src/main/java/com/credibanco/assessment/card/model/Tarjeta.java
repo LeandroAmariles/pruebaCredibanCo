@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @ToString
 @Table(name = "tarjeta")
 @Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE tajeta SET is_active=false WHERE tarjeta_id=?")
+@SQLDelete(sql = "UPDATE tarjeta SET is_active=false WHERE id=?")
 @NoArgsConstructor
 @EntityListeners(AuditListener.class)
 public class Tarjeta implements Auditable {
@@ -30,7 +30,6 @@ public class Tarjeta implements Auditable {
   private String numeroValidacion;
 
   @Column(name = "numero_tarjeta")
-  @Size(min = 16, max = 19)
   private String pan;
 
   @Column(name = "titular")
@@ -46,6 +45,9 @@ public class Tarjeta implements Auditable {
 
   @Column(name = "tipo")
   private String tipo;
+
+  @Column(name = "estado")
+  private String estado = "creada";
 
   @Embedded
   private Audit audit;

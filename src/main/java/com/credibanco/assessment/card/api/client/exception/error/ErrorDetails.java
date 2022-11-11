@@ -1,5 +1,6 @@
 package com.credibanco.assessment.card.api.client.exception.error;
 
+import com.credibanco.assessment.card.dto.request.EnrolarRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
@@ -15,4 +16,5 @@ import javax.validation.constraints.NotNull;
 public class ErrorDetails {
   @NotNull ErrorCode code;
   @NotNull String detail;
+  @NotNull Object object;
 }
