@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -12,7 +13,8 @@ import javax.validation.constraints.Size;
 public class CrearTarjetaRequest {
 
   @JsonProperty("pan")
-  @NotNull
+  @NotBlank
+  @Size(min = 16, max = 19)
   private String pan;
 
   @NotNull
@@ -21,7 +23,7 @@ public class CrearTarjetaRequest {
 
   @NotNull
   @JsonProperty("cedula")
-  @Size(min=10, max = 15)
+  @Size(min = 10, max = 15)
   private String cedula;
 
   @NotNull
@@ -32,7 +34,6 @@ public class CrearTarjetaRequest {
   @JsonProperty("telefono")
   @Size(min = 10, max = 10)
   private String telefono;
-
 
 
 }

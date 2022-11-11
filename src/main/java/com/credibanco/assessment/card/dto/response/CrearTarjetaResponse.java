@@ -1,5 +1,6 @@
 package com.credibanco.assessment.card.dto.response;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class CrearTarjetaResponse {
 
-  private Long codigoRespuesta;
+  private String codigoRespuesta;
 
   private String mensaje;
 

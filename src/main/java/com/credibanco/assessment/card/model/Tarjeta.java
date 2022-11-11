@@ -27,7 +27,7 @@ public class Tarjeta implements Auditable {
   private Long id;
 
   @Column(name = "numero_validacion")
-  private Integer numeroValidacion;
+  private String numeroValidacion;
 
   @Column(name = "numero_tarjeta")
   @Size(min = 16, max = 19)

@@ -1,6 +1,7 @@
 package com.credibanco.assessment.card.impl;
 
 import com.credibanco.assessment.card.api.client.exception.ConflictException;
+import com.credibanco.assessment.card.api.client.exception.CreateException;
 import com.credibanco.assessment.card.model.Tarjeta;
 import com.credibanco.assessment.card.repository.TarjetaRepository;
 import com.credibanco.assessment.card.service.TarjetaService;
@@ -13,25 +14,38 @@ import javax.transaction.Transactional;
 @Service
 public class TarjetaServiceImpl implements TarjetaService {
 
+  private final static String TIPO_DEBITO = "debito";
+
+  private final static String TIPO_CREDITO = "credito";
+
   @Autowired private TarjetaRepository tarjetaRepository;
 
 
   @Override
   @Transactional
   public Tarjeta nuevaTarjeta(Tarjeta request) {
-    if(sePuedeCrear(request.getPan())) {
-      request.setNumeroValidacion((int) (Math.random() * 100) + 1);
-      tarjetaRepository.save(request);
+    try {
+      if (validarExistencia(request.getPan()) && corroborarTipo(request.getTipo()) ) {
+        request.setNumeroValidacion(String.valueOf((int) (Math.random() * 100) + 1));
+        tarjetaRepository.save(request);
+      }
+    }catch (ConflictException e){
+      throw new CreateException("Error creando la nueva tarjeta, "+ e.getConflictMessage());
     }
-    //Hacer que retorne el response con el mensaje y
-    // todo desde aqui
-    return request;
+    return request ;
   }
 
-  private Boolean sePuedeCrear(String pan){
+  private Boolean validarExistencia(String pan) throws ConflictException {
     if(tarjetaRepository.findByPan(pan)!=null){
-      throw new ConflictException("Ya hay un prodcto con el numero de tarjeta"+pan);
+      throw new ConflictException("Ya hay un prodcto con el numero de tarjeta "+pan);
     }
     return true;
+  }
+
+  private Boolean corroborarTipo(String tipo) throws ConflictException {
+    if(tipo.equalsIgnoreCase(TIPO_DEBITO)||tipo.equalsIgnoreCase(TIPO_CREDITO)){
+      return true;
+    }
+    throw new ConflictException("Tipo invalido");
   }
 }
