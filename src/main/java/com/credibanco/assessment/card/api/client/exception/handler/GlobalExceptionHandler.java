@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
     ErrorDetails error = ErrorDetails.builder()
         .code(ErrorCode.INVALID_CREDENTIALS)
         .detail(ex.getConflictMessage())
-        .object(EliminarTarjetaResponse.builder()
+        .object(ResponseError.builder()
             .codigoRespuesta("01")
             .mensaje("Tarjeta no existe")
             .build())
@@ -94,13 +94,27 @@ public class GlobalExceptionHandler {
     ErrorDetails error = ErrorDetails.builder()
         .code(ErrorCode.INVALID_CREDENTIALS)
         .detail(ex.getConflictMessage())
-        .object(EliminarTarjetaResponse.builder()
+        .object(ResponseError.builder()
             .codigoRespuesta("00")
             .mensaje("Tarjeta no enrolada")
             .build())
         .build();
     return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
   }
+
+  @ExceptionHandler(ConflictTransactionTimeException.class)
+  private ResponseEntity<ErrorDetails> handleConflictTransactionTime(ConflictTransactionTimeException ex) {
+    ErrorDetails error = ErrorDetails.builder()
+        .code(ErrorCode.INVALID_CREDENTIALS)
+        .detail(ex.getConflictMessage())
+        .object(ResponseError.builder()
+            .codigoRespuesta("02")
+            .mensaje("No se puede anular la transaccion")
+            .build())
+        .build();
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+  }
+
 
 
 
