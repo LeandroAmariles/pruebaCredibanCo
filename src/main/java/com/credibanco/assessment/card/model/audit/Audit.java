@@ -20,7 +20,7 @@ public class Audit {
   private Boolean isActive = Boolean.TRUE;
 
   @Column(name = "created_at", nullable = false, updatable = false)
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
   private LocalDateTime createdAt;
 
 }

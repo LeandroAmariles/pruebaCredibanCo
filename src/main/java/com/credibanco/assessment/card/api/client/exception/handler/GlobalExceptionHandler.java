@@ -76,6 +76,33 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
   }
 
+  @ExceptionHandler(ConflictTransactionException.class)
+  private ResponseEntity<ErrorDetails> handleConflictTransaction ( ConflictTransactionException ex) {
+    ErrorDetails error = ErrorDetails.builder()
+        .code(ErrorCode.INVALID_CREDENTIALS)
+        .detail(ex.getConflictMessage())
+        .object(EliminarTarjetaResponse.builder()
+            .codigoRespuesta("01")
+            .mensaje("Tarjeta no existe")
+            .build())
+        .build();
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+  }
+
+  @ExceptionHandler(ConflictTransactionException2.class)
+  private ResponseEntity<ErrorDetails> handleConflictTransactionNoRoled (ConflictTransactionException2 ex) {
+    ErrorDetails error = ErrorDetails.builder()
+        .code(ErrorCode.INVALID_CREDENTIALS)
+        .detail(ex.getConflictMessage())
+        .object(EliminarTarjetaResponse.builder()
+            .codigoRespuesta("00")
+            .mensaje("Tarjeta no enrolada")
+            .build())
+        .build();
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+  }
+
+
 
 
 

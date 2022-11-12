@@ -10,6 +10,8 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -48,6 +50,10 @@ public class Tarjeta implements Auditable {
 
   @Column(name = "estado")
   private String estado = "creada";
+
+  @OneToMany(mappedBy = "tarjeta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ToString.Exclude
+  private Set<Transaccion> transacciones;
 
   @Embedded
   private Audit audit;

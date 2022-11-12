@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("tarjeta/")
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class TarjetaController implements TarjetaApi {
 
   @Override
   @PostMapping("/crearTarjeta")
-  public ResponseEntity<CrearTarjetaResponse> crearTarjeta(@RequestBody CrearTarjetaRequest request) {
+  public ResponseEntity<CrearTarjetaResponse> crearTarjeta(@Valid @RequestBody CrearTarjetaRequest request) {
     Tarjeta nT = tarjetaMapper.requestToEntity(request);
     CrearTarjetaResponse response = new CrearTarjetaResponse();
     if (tarjetaService.nuevaTarjeta(nT) != null) {
@@ -43,7 +45,7 @@ public class TarjetaController implements TarjetaApi {
   }
   @Override
   @PatchMapping("/enrolarTarjeta")
-  public ResponseEntity<EnrolarResponse> enrolarTarjeta(@RequestBody EnrolarRequest request) {
+  public ResponseEntity<EnrolarResponse> enrolarTarjeta(@Valid @RequestBody EnrolarRequest request) {
     EnrolarResponse response = new EnrolarResponse();
     if (tarjetaService.enrolarTarjeta(request)) {
       response.setCodigoRespuesta("00");
@@ -65,7 +67,7 @@ public class TarjetaController implements TarjetaApi {
   }
   @Override
   @DeleteMapping("/tarjeta")
-  public ResponseEntity<EliminarTarjetaResponse> eliminarTarjeta(@RequestBody EliminarTarjetaRequest request){
+  public ResponseEntity<EliminarTarjetaResponse> eliminarTarjeta(@Valid @RequestBody EliminarTarjetaRequest request){
     EliminarTarjetaResponse response = new EliminarTarjetaResponse();
     if(tarjetaService.borrarTarjeta(request)){
       response.setCodigoRespuesta("00");
